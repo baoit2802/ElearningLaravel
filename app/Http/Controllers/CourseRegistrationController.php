@@ -20,6 +20,23 @@ class CourseRegistrationController extends Controller
     {
         $course = Course::findOrFail($courseId);
 
+        if (CourseRegistration::where('user_id', Auth::id())->where('course_id', $courseId)->exists()) {
+            return redirect()->back()->with('error', 'Bạn đã đăng ký khóa học này.');
+        }
+
+        // Kiểm tra nếu khóa học miễn phí
+        if ($course->price == 0) {
+            CourseRegistration::create([
+                'user_id' => Auth::id(),
+                'course_id' => $course->id,
+                'amount' => 0,
+                'status' => 'paid',
+            ]);
+
+            return redirect()->route('courses.my_courses')->with('success', 'Bạn đã đăng ký khóa học thành công!');
+        }
+
+        // Đối với khóa học có giá, chuyển hướng đến VNPAY
         $registration = CourseRegistration::create([
             'user_id' => Auth::id(),
             'course_id' => $course->id,
@@ -27,8 +44,9 @@ class CourseRegistrationController extends Controller
             'status' => 'pending',
         ]);
 
-        return redirect()->route('courses.payment', $registration->id);
+        return redirect()->route('payment.create', ['id' => $registration->id]);
     }
+
 
     // Trang thanh toán
     public function payment($registrationId)
@@ -56,7 +74,8 @@ class CourseRegistrationController extends Controller
         $courses = Course::whereIn('id', function ($query) use ($user) {
             $query->select('course_id')
                 ->from('course_registrations')
-                ->where('user_id', $user->id);
+                ->where('user_id', $user->id)
+                ->where('status', 'paid');// Chi lay trang thai paid
         })->get();
 
         return view('client.courses.my_courses', compact('courses'));

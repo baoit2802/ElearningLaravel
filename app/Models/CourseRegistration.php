@@ -9,7 +9,7 @@ class CourseRegistration extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'course_id', 'status', 'amount'];
+    protected $fillable = ['user_id', 'course_id', 'status', 'amount', 'transaction_id'];
 
     public function user()
     {

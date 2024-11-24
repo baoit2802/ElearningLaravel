@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
             $table->enum('status', ['pending', 'paid', 'cancelled'])->default('pending');
+            $table->string('transaction_id')->nullable();
             $table->decimal('amount', 10, 2)->default(0);
             $table->timestamps();
         });

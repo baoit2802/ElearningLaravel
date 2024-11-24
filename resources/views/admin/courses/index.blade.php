@@ -31,7 +31,8 @@
                         <span>Không có hình</span>
                     @endif
                 </td>
-                <td>{{$course->price}}</td>
+                <td>{{ number_format($course->price, 0, ',', '.') }} VND</td>
+
 
                 <td>
                     <a href="{{ route('admin.courses.edit', $course->id) }}" class="btn btn-warning">Sửa</a>

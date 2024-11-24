@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hiển thị toast với hiệu ứng từ phải qua trái
         toastElement.classList.add('slide-in');
 
-        // Tạo một Toast Bootstrap
         const toast = new bootstrap.Toast(toastElement, {
             animation: false, // Tắt animation mặc định của Bootstrap
             autohide: true,
@@ -29,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Hiển thị toast
         toast.show();
     });
 });

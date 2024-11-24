@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\PaymentController;
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -35,15 +37,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/cart/add/{courseId}', [CartController::class, 'addToCart'])->name('cart.add');
     Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
     Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::get('/cart/vnpay-return', [CartController::class, 'returnPayment'])->name('cart.returnPayment');
+
+    Route::post('/payment/{courseId}', [PaymentController::class, 'createPayment'])->name('payment.create');
+    Route::get('/vnpay-return', [PaymentController::class, 'returnPayment'])->name('payment.return');
+    //Tim kiem
+    Route::get('/search', [CourseController::class, 'search'])->name('courses.search');
+
 });
 
 // Admin route
 Route::group(['middleware' => 'auth.admin'], function () {
     Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/', function () {
-            return view('admin.dashboard');
-        })->name('dashboard');
-
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/home',[CourseController::class, 'adminHome'])->name('home');
+        Route::resource('courses', CourseController::class)->except('index');
+             
 
         Route::resource('users', UserController::class); // CRUD user
         Route::resource('courses', CourseController::class); // CRUD course

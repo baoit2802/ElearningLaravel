@@ -34,38 +34,46 @@
             color: burlywood;
         }
 
-        .container {}
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1055;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        @if (session('success'))
-            <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive"
-                aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        {{ session('success') }}
+    <div class="container position-relative">
+        <div class="toast-container">
+            @if (session('success'))
+                <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive"
+                    aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            {{ session('success') }}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                            aria-label="Close"></button>
                     </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
                 </div>
-            </div>
-        @endif
+            @endif
 
-        @if (session('error'))
-            <div class="toast align-items-center text-bg-danger border-0 show" role="alert" aria-live="assertive"
-                aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        {{ session('error') }}
+            @if (session('error'))
+                <div class="toast align-items-center text-bg-danger border-0 show" role="alert" aria-live="assertive"
+                    aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            {{ session('error') }}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                            aria-label="Close"></button>
                     </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
                 </div>
-            </div>
-        @endif
+            @endif
+        </div>
         <div class="container d-flex justify-content-center align-items-center min-vh-100">
+
 
             @yield('content')
         </div>
@@ -73,6 +81,7 @@
             <p>© {{ date('Y') }} Online learning web. All Rights Reserved.</p>
         </footer>
     </div>
+    <script src="{{asset('public/js/app.js')}}"></script>
 </body>
 
 </html>

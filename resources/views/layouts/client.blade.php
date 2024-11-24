@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
@@ -16,7 +18,7 @@
 <body>
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand me-auto" href="#">Logo</a>
+            <a class="navbar-brand me-auto" href="{{route('home')}}">Logo</a>
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
                 aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
@@ -25,13 +27,15 @@
                 </div>
                 <div class="offcanvas-body">
                     <div class="container-fluid">
-                        <form class="d-flex justify-content-center" role="search">
-                            <input class="form-control me-2 searchArea w-50 searchArea" type="search"
-                                placeholder="Tìm kiếm khóa học" aria-label="Search">
+                        <form class="d-flex justify-content-center" action="{{ route('courses.search') }}" method="GET"
+                            role="search">
+                            <input class="form-control me-2 searchArea w-50" type="search" name="query"
+                                placeholder="Tìm kiếm khóa học" aria-label="Search" required>
                             <button class="btn btn-outline-success" type="submit">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
                         </form>
+
                     </div>
                     <div class="container-fluid">
                         <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
@@ -39,13 +43,20 @@
                                     chủ</a></li>
                             <li class="nav-item"><a class="nav-link mx-lg-2" href="{{route('courses.my_courses')}}">Khóa
                                     học</a></li>
-                            <li class="nav-item"><a class="nav-link mx-lg-2" href="{{route('cart.index')}}">Giỏ hàng</a></li>
-                            <li class="nav-item"><a class="nav-link mx-lg-2" href="#">Cuộc thi</a></li>
+                            <li class="nav-item"><a class="nav-link mx-lg-2" href="{{route('cart.index')}}">Giỏ hàng</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link mx-lg-2" href="#">Cuộc
+                                    thi</a></li>
                             <li class="nav-item"><a class="nav-link mx-lg-2" href="#">Liên hệ</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
+            @auth
+                @if(auth()->user()->is_admin)
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-success me-2">Về trang quản lý</a>
+                @endif
+            @endauth
             <!-- Hiển thị Login hoặc Avatar -->
             @guest
                 <a href="{{ route('login') }}" class="login-button">Login</a>
@@ -53,7 +64,7 @@
             @auth
                 <div class="avatar-dropdown">
                     <a href="#" id="avatarDropdownToggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ auth()->user()->avatar_url ? asset('public/storage/' . auth()->user()->avatar_url) : asset('storage/avatars/default-avatar.png') }}" 
+                        <img src="{{ auth()->user()->avatar_url ? asset('public/storage/' . auth()->user()->avatar_url) : asset('storage/avatars/default-avatar.png') }}"
                             alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%;">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end avatar-dropdown-menu" aria-labelledby="avatarDropdownToggle">
@@ -74,7 +85,7 @@
             </button>
         </div>
     </nav>
-    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+    <div class="toast-container position-fixed p-3" style="z-index: 1055; top: 20px; right: 20px">
         @if (session('success'))
             <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive"
                 aria-atomic="true">

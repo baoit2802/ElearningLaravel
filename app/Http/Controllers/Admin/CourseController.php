@@ -25,10 +25,16 @@ class CourseController extends Controller
         }
 
         // Người dùng: Hiển thị khóa học chưa đăng ký
-        $registeredCourses = CourseRegistration::where('user_id', $user->id)->pluck('course_id');
+        $registeredCourses = CourseRegistration::where('user_id', $user->id)
+            ->where('status', 'paid')->pluck('course_id');
         $courses = Course::whereNotIn('id', $registeredCourses)->get();
 
-        return view('client.courses.index', compact('courses'))->with('success','Danh sách các khóa học');
+        return view('client.courses.index', compact('courses'))->with('success', 'Danh sách các khóa học');
+    }
+
+    public function adminHome(){
+        $courses = Course::all();
+        return view('client.courses.index', compact('courses'))->with('success','Chuyển đến trang người dùng thành công');
     }
 
     /**
@@ -54,7 +60,7 @@ class CourseController extends Controller
         ]);
 
         // Lấy dữ liệu từ form
-        $data = $request->only(['courseName', 'description','details','price']);
+        $data = $request->only(['courseName', 'description', 'details', 'price']);
 
         // Kiểm tra nếu có tệp hình ảnh
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
@@ -117,7 +123,7 @@ class CourseController extends Controller
         ]);
 
 
-        $data = $request->only(['courseName', 'description','details','price']);
+        $data = $request->only(['courseName', 'description', 'details', 'price']);
         // Kiểm tra nếu có tệp hình ảnh
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
 
@@ -135,6 +141,19 @@ class CourseController extends Controller
         $course->update($data);
 
         return redirect()->route('admin.courses.index')->with('success', 'Khóa học đã được cập nhật!');
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Tìm kiếm các khóa học dựa trên tên hoặc mô tả
+        $courses = Course::where('courseName', 'LIKE', "%{$query}%")
+            ->orWhere('description', 'LIKE', "%{$query}%")
+            ->get();
+
+        // Trả về view hiển thị kết quả tìm kiếm
+        return view('client.courses.search', compact('courses', 'query'));
     }
 
 

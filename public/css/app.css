@@ -22,6 +22,7 @@ h6 {
 .container {
     box-shadow: 0px 7px 25px rgb(0, 0, 0, 0.08);
     border-radius: 15px;
+    padding-top: 100px;
 }
 
 .user-info-container {
@@ -176,17 +177,178 @@ h6 {
     border-radius: none;
 }
 
+
+/* Định dạng thẻ card */
+
 .course-card {
-    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .course-card:hover {
-    transform: scale(1.05);
-    transition: 0.3s;
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.container {
-    padding-top: 100px;
+
+/* Hình ảnh khóa học */
+
+.course-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+}
+
+
+/* Nội dung card */
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.course-card .card-text {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    /* Hiển thị tối đa 3 dòng */
+    -webkit-box-orient: vertical;
+}
+
+.price {
+    font-size: 16px;
+    color: #e53935;
+    font-weight: bold;
+}
+
+.original-price {
+    font-size: 14px;
+    text-decoration: line-through;
+    color: #999;
+}
+
+.discount {
+    font-size: 14px;
+    color: #e53935;
+    font-weight: bold;
+}
+
+
+/* Container chính */
+
+.course-layout-container {
+    padding: 0;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+
+/* Row chính */
+
+.course-layout-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 0;
+}
+
+
+/* Cột chính */
+
+.course-layout-col-main {
+    flex: 2;
+    max-width: 66.666%;
+    background: linear-gradient(135deg, #DEB887 0%, #87CEFA 100%);
+}
+
+.course-layout-col-side {
+    max-width: 100%;
+}
+
+
+/* Phần thông tin chính */
+
+.course-layout-info {
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.course-layout-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.course-layout-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #e9ecef;
+}
+
+
+/* Phần card hình ảnh và thanh toán */
+
+.course-layout-card {
+    display: flex;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    height: 100%;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.course-layout-image {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.course-layout-card-body {
+    padding: 20px;
+}
+
+.course-layout-price {
+    font-size: 1.5rem;
+}
+
+.course-layout-discount {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+}
+
+
+/* Phần thông tin chi tiết khóa học */
+
+.course-layout-heading {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.course-layout-details {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
 }
 
 .fixed-image {
@@ -201,33 +363,6 @@ h6 {
     border-radius: 20px;
     cursor: pointer;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
-}
-
-.ListContest a {
-    display: block;
-    margin-bottom: 10px;
-}
-
-#Contest {
-    border-radius: 15px;
-    background-color: #f8f9fa;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    color: black;
-    padding: 15px;
-    box-shadow: 0px 7px 25px rgba(0, 0, 0, 0.08);
-}
-
-.CourseContest:hover #Contest {
-    background-color: #c1cbd4;
-    transform: scale(1.05);
-    color: black;
-    box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.08);
-}
-
-.NameContest {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
 }
 
 .lecturer-img {

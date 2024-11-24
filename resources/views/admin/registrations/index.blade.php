@@ -11,6 +11,7 @@
                 <th>Khóa học</th>
                 <th>Số tiền</th>
                 <th>Trạng thái</th>
+                <th>Mã giao dịch</th>
                 <th>Ngày đăng ký</th>
                 <th>Thao tác </th>
             </tr>
@@ -21,8 +22,9 @@
                     <td>{{ $registration->id }}</td>
                     <td>{{ $registration->user->name }}</td>
                     <td>{{ $registration->course->courseName }}</td>
-                    <td>{{ number_format($registration->amount, 2) }} VND</td>
+                    <td>{{ number_format($registration->amount) }} VND</td>
                     <td>{{ ucfirst($registration->status) }}</td>
+                    <td>{{$registration->transaction_id}}</td>
                     <td>{{ $registration->created_at }}</td>
                     <td>
                         <form action="{{ route('admin.registrations.destroy', $registration->id) }}" method="POST"

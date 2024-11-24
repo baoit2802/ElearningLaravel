@@ -27,16 +27,26 @@
                     <i class="lni lni-grid-alt"></i>
                 </button>
                 <div class="sidebar-logo">
-                    <a href="">Elearning</a>
+                    <a href="{{route('home')}}">Elearning</a>
                 </div>
             </div>
             <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a href="{{route('admin.home')}}" class="sidebar-link">
+                        <i class="fa-solid fa-home"></i>
+                        <span>Trang chủ người dùng</span>
+                    </a>
+                </li>
+
+
+
                 <li class="sidebar-item">
                     <a href="{{ route('admin.users.index') }}" class="sidebar-link">
                         <i class="fa-solid fa-user"></i>
                         <span>User</span>
                     </a>
                 </li>
+
                 <li class="sidebar-item">
                     <a href="{{route('admin.registrations.index')}}" class="sidebar-link">
                         <i class="fa-solid fa-book-medical"></i>
@@ -74,7 +84,7 @@
                         </li>
                         <li class="sidebar-item">
                             <a href="#" class="sidebar-link">
-                                <i class="fa-solid fa-user-plus"></i>Create Contest
+                                <i class="fa-solid fa-user-plus"></i>Result
                             </a>
                         </li>
                     </ul>
@@ -103,7 +113,7 @@
         </aside>
         <div class="main">
             <main class="content px-3 py-4">
-                <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+                <div class="toast-container position-fixed p-3" style="z-index: 1055; top: 20px; right: 20px; ">
                     @if (session('success'))
                         <div class="toast align-items-center text-bg-success border-0 show" role="alert"
                             aria-live="assertive" aria-atomic="true">
