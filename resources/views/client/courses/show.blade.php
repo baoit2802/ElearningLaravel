@@ -29,7 +29,7 @@
                     <h4 class="course-layout-price text-danger fw-bold">
                         @if($course->price > 0)
                             <span class="price">
-                                {{ number_format($course->price, 3, ',', '.') }} đ
+                                {{ number_format($course->price, 0, ',', '.') }} đ
                             </span>
                         @else
                             <span class="price text-success">Miễn phí</span>

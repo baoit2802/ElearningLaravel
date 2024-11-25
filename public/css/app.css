@@ -365,19 +365,82 @@ h6 {
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
 }
 
-.lecturer-img {
-    height: 200px;
-    object-fit: cover;
+.exam-item {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.lecturer-card {
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.lecturer-card:hover {
+.exam-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    background-color: #f0f8ff;
+}
+
+.exam-item h5 {
+    color: #007bff;
+    transition: color 0.2s;
+}
+
+.exam-item:hover h5 {
+    color: #0056b3;
+}
+
+.exam-item .btn-outline-primary {
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.exam-item .btn-outline-primary:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.icon-container {
+    min-width: 50px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e9f7ff;
+    border-radius: 50%;
+}
+
+.exam-form {
+    max-width: 800px;
+    margin: auto;
+}
+
+.question-card {
+    border: 1px solid #f0f0f0;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.question-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.form-check-label {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.form-check-input {
+    margin-right: 10px;
+}
+
+.btn-success {
+    transition: background-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    box-shadow: 0 5px 10px rgba(0, 123, 0, 0.3);
 }
 
 .form-control:focus {

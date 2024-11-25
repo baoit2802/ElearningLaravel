@@ -78,7 +78,7 @@
                     </a>
                     <ul id="contest" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="{{route('admin.exams.index')}}" class="sidebar-link">
                                 <i class="fa-solid fa-circle-info"></i>All Contests
                             </a>
                         </li>

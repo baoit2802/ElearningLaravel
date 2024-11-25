@@ -45,7 +45,7 @@
                                     học</a></li>
                             <li class="nav-item"><a class="nav-link mx-lg-2" href="{{route('cart.index')}}">Giỏ hàng</a>
                             </li>
-                            <li class="nav-item"><a class="nav-link mx-lg-2" href="#">Cuộc
+                            <li class="nav-item"><a class="nav-link mx-lg-2" href="{{route('exams.list')}}">Cuộc
                                     thi</a></li>
                             <li class="nav-item"><a class="nav-link mx-lg-2" href="#">Liên hệ</a></li>
                         </ul>

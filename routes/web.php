@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ExamController;
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -44,15 +45,36 @@ Route::group(['middleware' => 'auth'], function () {
     //Tim kiem
     Route::get('/search', [CourseController::class, 'search'])->name('courses.search');
 
+    // Exam
+    Route::get('/exams', [ExamController::class, 'listExams'])->name('exams.list');
+    Route::get('/exams/{exam}/start', [ExamController::class, 'startExam'])->name('exams.start');
+    Route::post('/exams/{exam}/submit', [ExamController::class, 'submitExam'])->name('exams.submit');
+    Route::post('/exams/{exam}/save-progress', [ExamController::class, 'saveProgress'])->name('exams.saveProgress');
+
+
+
 });
 
 // Admin route
 Route::group(['middleware' => 'auth.admin'], function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-        Route::get('/home',[CourseController::class, 'adminHome'])->name('home');
+        Route::get('/home', [CourseController::class, 'adminHome'])->name('home');
         Route::resource('courses', CourseController::class)->except('index');
-             
+
+        //Exam
+        Route::get('/exams', [ExamController::class, 'index'])->name('exams.index');
+        Route::get('/exams/create', [ExamController::class, 'create'])->name('exams.create');
+        Route::post('/exams', [ExamController::class, 'store'])->name('exams.store');
+        Route::get('/exams/{id}/edit', [ExamController::class, 'edit'])->name('exams.edit');
+        Route::put('/exams/{id}', [ExamController::class, 'update'])->name('exams.update');
+        Route::delete('/exams/{id}', [ExamController::class, 'destroy'])->name('exams.destroy');
+        Route::get('/exams/{id}/questions', [ExamController::class, 'manageQuestions'])->name('exams.questions.index');
+        Route::post('/exams/{id}/questions', [ExamController::class, 'addQuestion'])->name('exams.questions.store');
+        Route::put('/exams/{exam}/questions', [ExamController::class, 'updateQuestion'])->name('exams.questions.update');
+        Route::delete('/exams/questions/{question}', [ExamController::class, 'deleteQuestion'])->name('exams.questions.destroy');
+
+
 
         Route::resource('users', UserController::class); // CRUD user
         Route::resource('courses', CourseController::class); // CRUD course
