@@ -12,7 +12,7 @@
                 <strong>Điểm của bạn:</strong> {{ $score }} / {{ $totalQuestions }}
             </p>
             <div class="mt-4">
-                <a href="{{ route('exams.list') }}" class="btn btn-primary px-4 py-2">
+                <a href="{{ route('exams.list') }}" class="btn btn-dark px-4 py-2">
                     <i class="bi bi-arrow-left"></i> Trở về danh sách bài thi
                 </a>
             </div>
@@ -24,16 +24,8 @@
     .card {
         border: none;
         border-radius: 10px;
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-    }
-
-    .btn-primary:hover {
-        background-color: #0056b3;
-        border-color: #0056b3;
+        box-shadow: 15px 15px 30px #bebebe,
+        -15px -15px 30px #ffffff;
     }
 </style>
 @endsection

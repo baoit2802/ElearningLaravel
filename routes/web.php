@@ -15,9 +15,11 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ExamController;
-
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\NotificationController;
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [CourseController::class, 'index'])->name('home');
@@ -33,7 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/courses/payment/{id}', [CourseRegistrationController::class, 'payment'])->name('courses.payment');
     Route::post('/courses/payment/{id}', [CourseRegistrationController::class, 'processPayment'])->name('courses.processPayment');
     Route::get('/my-courses', [CourseRegistrationController::class, 'myCourses'])->name('courses.my_courses');
-    //Giỏ hàng
+    //Gio hang
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add/{courseId}', [CartController::class, 'addToCart'])->name('cart.add');
     Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
@@ -51,8 +53,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/exams/{exam}/submit', [ExamController::class, 'submitExam'])->name('exams.submit');
     Route::post('/exams/{exam}/save-progress', [ExamController::class, 'saveProgress'])->name('exams.saveProgress');
 
+    //Danh gia
 
+    Route::post('/videos/{video}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::get('/videos/{video}/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+    Route::get('/videos/{videoId}/reviews', [VideoDisplayController::class, 'getReviews']);
+    
+    //Thonng bao
+    Route::get('/navbar-notifications', [NotificationController::class, 'getNavbarNotifications'])->name('navbar.notifications');
+    Route::post('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 
+    //Gui email
+    Route::get('/form-sendEmail', [EmailController::class, 'index'])->name('contact.email');
+    Route::post('/send-email', [EmailController::class, 'sendEmailToAdmin'])->name('send.email.to.admin');
 });
 
 // Admin route
@@ -74,6 +87,10 @@ Route::group(['middleware' => 'auth.admin'], function () {
         Route::put('/exams/{exam}/questions', [ExamController::class, 'updateQuestion'])->name('exams.questions.update');
         Route::delete('/exams/questions/{question}', [ExamController::class, 'deleteQuestion'])->name('exams.questions.destroy');
 
+        Route::get('/exam-results', [ExamController::class, 'results'])->name('exams.results.index');
+        Route::get('/exam-results/{id}', [ExamController::class, 'showResult'])->name('exams.results.show');
+        Route::delete('/exam-results/{id}', [ExamController::class, 'deleteResult'])->name('exams.results.delete');
+
 
 
         Route::resource('users', UserController::class); // CRUD user
@@ -89,6 +106,10 @@ Route::group(['middleware' => 'auth.admin'], function () {
     ]);
     Route::get('/registrations', [CourseRegistrationController::class, 'adminIndex'])->name('admin.registrations.index');
     Route::delete('/admin/registrations/{id}', [CourseRegistrationController::class, 'destroy'])->name('admin.registrations.destroy');
+
+    //Gui thong bao
+    Route::get('/admin/notifications', [NotificationController::class, 'index'])->name('admin.notifications.index');
+    Route::post('/admin/send-notification', [NotificationController::class, 'sendNotification'])->name('admin.sendNotification');
 
 });
 

@@ -12,5 +12,15 @@ class UserAnswer extends Model
     {
         return $this->belongsTo(ExamResult::class);
     }
+
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
+
+    public function answer()
+    {
+        return $this->belongsTo(Answer::class);
+    }
 }
 

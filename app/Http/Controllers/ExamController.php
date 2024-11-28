@@ -225,40 +225,72 @@ class ExamController extends Controller
     $totalQuestions = $exam->questions->count();
     $correctAnswers = 0;
 
+    // Tạo kết quả bài thi
+    $examResult = ExamResult::create([
+        'user_id' => $user->id,
+        'exam_id' => $exam->id,
+        'score' => 0, // Sẽ cập nhật sau
+        'total_questions' => $totalQuestions,
+        'created_at' => now(),
+    ]);
+
+    // Lưu câu trả lời của người dùng và tính điểm
     foreach ($exam->questions as $question) {
-        if (
-            isset($storedAnswers[$question->id]) &&
-            $question->answers()->where('id', $storedAnswers[$question->id])->where('is_correct', true)->exists()
-        ) {
-            $correctAnswers++;
+        $selectedAnswerId = $storedAnswers[$question->id] ?? null;
+
+        if ($selectedAnswerId) {
+            $isCorrect = $question->answers()
+                ->where('id', $selectedAnswerId)
+                ->where('is_correct', true)
+                ->exists();
+
+            if ($isCorrect) {
+                $correctAnswers++;
+            }
+
+            // Lưu câu trả lời vào bảng user_answers
+            $examResult->userAnswers()->create([
+                'question_id' => $question->id,
+                'answer_id' => $selectedAnswerId,
+            ]);
         }
     }
 
-    // Kiểm tra xem người dùng đã tham gia bài thi trước đó
-    $existingResult = ExamResult::where('exam_id', $exam->id)->where('user_id', $user->id)->first();
-
-    if ($existingResult) {
-        return view('client.exams.result', [
-            'exam' => $exam,
-            'score' => $existingResult->score,
-            'totalQuestions' => $existingResult->total_questions,
-            'message' => 'Bạn đã tham gia bài thi này trước đó.',
-        ]);
-    }
-
-    // Lưu kết quả bài thi
-    $result = ExamResult::create([
-        'user_id' => $user->id,
-        'exam_id' => $exam->id,
+    // Cập nhật điểm
+    $examResult->update([
         'score' => $correctAnswers,
-        'total_questions' => $totalQuestions,
     ]);
 
     return view('client.exams.result', [
         'exam' => $exam,
-        'score' => $result->score,
-        'totalQuestions' => $result->total_questions,
+        'score' => $examResult->score,
+        'totalQuestions' => $examResult->total_questions,
         'message' => 'Chúc mừng bạn đã hoàn thành bài thi!',
     ]);
 }
+
+
+    public function results()
+    {
+        $results = ExamResult::with(['user', 'exam'])->orderBy('created_at', 'desc')->paginate(10);
+        return view('admin.exams.results.index', compact('results'));
+    }
+
+    // Xem chi tiết kết quả của một bài thi
+    public function showResult($id)
+{
+    $result = ExamResult::with(['user', 'exam', 'userAnswers.question.answers'])->findOrFail($id);
+
+    return view('admin.exams.results.show', compact('result'));
+}
+
+    // Xóa kết quả thi
+    public function deleteResult($id)
+    {
+        $result = ExamResult::findOrFail($id);
+        $result->delete();
+
+        return redirect()->route('admin.exams.results.index')->with('success', 'Kết quả thi đã được xóa thành công.');
+    }
+
 }

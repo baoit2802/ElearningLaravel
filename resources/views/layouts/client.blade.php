@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script>
 
 
     <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
@@ -47,7 +49,10 @@
                             </li>
                             <li class="nav-item"><a class="nav-link mx-lg-2" href="{{route('exams.list')}}">Cuộc
                                     thi</a></li>
-                            <li class="nav-item"><a class="nav-link mx-lg-2" href="#">Liên hệ</a></li>
+                            <li class="nav-item"><a class="nav-link mx-lg-2" href="{{route('contact.email')}}">Liên hệ</a></li>
+                            <li>
+                                <x-navbar-notifications />
+                            </li>
                         </ul>
                     </div>
                 </div>

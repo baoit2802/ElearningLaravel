@@ -16,6 +16,11 @@ class Video extends Model
         return $this->belongsTo(Course::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function getEmbedUrlAttribute()
     {
         if (strpos($this->video_url, 'youtube.com') !== false) {

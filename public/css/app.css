@@ -17,6 +17,7 @@ h4,
 h5,
 h6 {
     color: #598fc9;
+    font-weight: bold;
 }
 
 .container {
@@ -169,6 +170,31 @@ h6 {
     .nav-link.active::before {
         width: 100%;
         visibility: visible;
+    }
+}
+
+@media (max-width: 991px) {
+    #notificationDropdown .dropdown-menu {
+        width: 100%;
+        /* Chiếm toàn bộ chiều rộng */
+        max-height: 60vh;
+        /* Giới hạn chiều cao */
+        overflow-y: auto;
+        /* Thêm cuộn dọc nếu nội dung dài */
+        position: absolute;
+        top: 60px;
+        /* Điều chỉnh vị trí theo menu */
+        left: 0;
+        /* Căn sang trái của navbar */
+        z-index: 1050;
+    }
+    .dropdown-menu {
+        border-radius: 0;
+        box-shadow: none;
+    }
+    #notificationDropdown {
+        position: relative;
+        /* Đảm bảo dropdown menu được định vị trong navbar */
     }
 }
 
@@ -359,7 +385,6 @@ h6 {
 
 .card {
     padding-top: 100px;
-    background: rgb(255, 255, 255);
     border-radius: 20px;
     cursor: pointer;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
@@ -405,24 +430,21 @@ h6 {
     border-radius: 50%;
 }
 
-.exam-form {
-    max-width: 800px;
-    margin: auto;
+.btn-submit {
+    background-color: #f3f7fe;
+    color: #3b82f6;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 150px;
+    height: 45px;
+    transition: 0.3s;
 }
 
-.question-card {
-    border: 1px solid #f0f0f0;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.question-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-}
-
-.card-title {
-    font-size: 1.25rem;
-    font-weight: bold;
+.btn-submit:hover {
+    background-color: #3b82f6;
+    box-shadow: 0 0 0 5px #3b83f65f;
+    color: #fff;
 }
 
 .form-check-label {
@@ -448,6 +470,48 @@ h6 {
     box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
+.rating {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    font-size: 2rem;
+    justify-content: center;
+    gap: 5px;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+    /* Ẩn radio */
+}
+
+.star-rating label {
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.star-rating input[type="radio"]:checked~label,
+.star-rating label:hover,
+.star-rating label:hover~label {
+    color: #f5c518;
+    /* Màu vàng cho sao được chọn */
+}
+
+textarea.form-control {
+    width: 100%;
+    height: 150px;
+    font-size: 1rem;
+    resize: none;
+    padding: 10px;
+    margin-top: 15px;
+}
+
 .btn {
     transition: all 0.3s ease;
 }
@@ -458,6 +522,8 @@ h6 {
 
 .card {
     overflow: hidden;
+    border-radius: 30px;
+    box-shadow: 15px 15px 30px #bebebe, -15px -15px 30px #ffffff;
 }
 
 .selected-lecturer {
@@ -571,7 +637,7 @@ footer .container a {
 footer .container hr {
     width: 60px;
     background-color: #000000;
-    height: 2px
+    height: 2px;
 }
 
 footer {
@@ -694,5 +760,95 @@ footer {
 
 .toast.slide-out {
     animation: slideOutLeft 0.5s forwards;
-    pointer-events: none
+    pointer-events: none;
+}
+
+.card-notification {
+    width: fit-content;
+    background-color: #f2f3f7;
+    border-radius: 0.75em;
+    cursor: pointer;
+    transition: ease 0.2s;
+    box-shadow: 1em 1em 1em #d8dae0b1, -0.75em -0.75em 1em #ffffff;
+    border: 1.5px solid #f2f3f7;
+    margin-bottom: 10px;
+}
+
+.container-notification {
+    display: flex;
+    flex-direction: row;
+    gap: 0.75em;
+    padding: 10px;
+}
+
+.status-ind {
+    width: 0.625em;
+    height: 0.625em;
+    background-color: #ff0000;
+    border-radius: 0.5em;
+}
+
+.text-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+    color: #333;
+}
+
+.time {
+    font-size: 0.875em;
+    color: #777;
+}
+
+.text-link {
+    font-weight: 500;
+    text-decoration: none;
+    color: black;
+}
+
+.button-wrap {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    align-items: center;
+}
+
+.secondary-cta {
+    background-color: transparent;
+    border: none;
+    font-size: 15px;
+    font-weight: 400;
+    color: #666666;
+    cursor: pointer;
+}
+
+.secondary-cta:hover {
+    color: #009970;
+    text-decoration: underline;
+}
+
+.primary-cta {
+    font-size: 15px;
+    background-color: transparent;
+    font-weight: 600;
+    color: #1677ff;
+    border: none;
+    border-radius: 1.5em;
+    cursor: pointer;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875em;
+}
+
+.btn-light {
+    border-radius: 0;
+    border: none;
+    background-color: inherit;
+}
+
+.btn-light:hover {
+    background-color: inherit;
 }
